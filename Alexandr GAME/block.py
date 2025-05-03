@@ -1,6 +1,6 @@
 import pygame as pg
 
-block_images = [pg.image.load(f'blocks/block{i}.jpg') for i in range(1, 1)]
+block_images = [pg.image.load(f'blocks/block{i}.jpg') for i in range(1,2)]
 pg.mixer.init()
 
 
@@ -13,12 +13,19 @@ class Block(pg.sprite.Sprite):
         self.jump_time = None
 
     def jump(self):
-        self.vector = -5
-        self.jump_time = pg.time.get_ticks()
-        self.image = pg.image.load('blocks/block1.jpg')
+        if self.rect.y >= 500:
+            jump = True
+            self.vector = -5
+            self.jump_time = pg.time.get_ticks()
+            self.image = pg.image.load('blocks/block1.jpg')
+        elif self.rect.y < 500:
+            jump = False
+
+
+
+
 
     def update(self):
-
         self.rect.y += self.vector
         if self.rect.bottom > 600:
             self.rect.bottom = 600
@@ -28,9 +35,9 @@ class Block(pg.sprite.Sprite):
 
         if self.jump_time is not None:
             elapsed_time = pg.time.get_ticks() - self.jump_time
-            if elapsed_time >= 300:
-                self.vector = 2
+            if elapsed_time >= 600:
+                self.vector = 5
                 current_time = pg.time.get_ticks()
-                frame_duration = 200  # Задержка между кадрами в миллисекундах
+                frame_duration = 100  # Задержка между кадрами в миллисекундах
                 frame_index = (current_time // frame_duration) % len(block_images)
                 self.image = block_images[frame_index]

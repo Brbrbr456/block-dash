@@ -1,7 +1,9 @@
 import random
 import pygame as pg
 from block import Block
-from big_block import Bigblock
+from bigblock import Bigblock
+from spike import Spike
+
 
 pg.init()
 pg.font.init()
@@ -12,7 +14,7 @@ W, H = 600, 600
 
 screen = pg.display.set_mode((W, H))
 
-block = Block(50, H // 2)
+block = Block(50, H)
 
 all_sprite = pg.sprite.Group(block)
 pipes = pg.sprite.Group()
@@ -55,24 +57,24 @@ while run:
         if event.type == pg.QUIT:
             run = False
         if event.type == pg.KEYUP and event.key == pg.K_SPACE:
-            block.jump()
+                block.jump()
         if event.type == pg.USEREVENT:
-            rand_hight = 150 + random.randint(0, 50)
-            pipe_up = Bigblock(W, 0, 50, rand_hight, (129, 208, 58))
-            pipe_down = Bigblock(W, rand_hight + random.randint(100, 200), 50, 1000, (129, 208, 58))
-            all_sprite.add(pipe_up, pipe_down)
-            pipes.add(pipe_up, pipe_down)
+            rand_hight = 400 + random.randint(50, 100)
+            pipe_down = Bigblock(W, rand_hight + random.randint(10, 50), 50, 1000, '#000000')
+            all_sprite.add(pipe_down)
+            pipes.add(pipe_down)
         if event.type == pg.USEREVENT + 1:
-            score += 1
+            score+=1
+        if event.type == pg.USEREVENT:
+            spike_down = Spike(600, 578)
+            all_sprite.add(spike_down)
+            pipes.add(spike_down)
 
-    if pg.sprite.spritecollide(block, Bigblock, False):
+    if pg.sprite.spritecollide(block, pipes, False):
         run = False
 
     all_sprite.draw(screen)
     all_sprite.update()
-
-    text = font.render(f"{score}", False, 'white')
-    screen.blit(text, (W // 2 - 25, 500))
 
     pg.display.update()
 

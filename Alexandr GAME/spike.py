@@ -1,12 +1,10 @@
 import pygame as pg
-
-
 class Spike(pg.sprite.Sprite):
-    def __init__(self, x, y, w, h, color):
+    def __init__(self, x, y):
         super().__init__()
-        self.image = pg.surface.Surface((w, h))
-        self.image.fill(color)
-        self.rect = self.image.get_rect(topleft=(x, y))
+        self.image = pg.image.load('spike.png')
+        self.rect = self.image.get_rect(center  =(x, y))
+        self.jump_time = None
 
     def update(self):
-        self.rect.x -= 4
+        self.rect.x = -3
