@@ -4,7 +4,6 @@ from block import Block
 from bigblock import Bigblock
 from spike import Spike
 
-
 pg.init()
 pg.font.init()
 
@@ -63,15 +62,13 @@ while run:
             pipe_down = Bigblock(W, rand_hight + random.randint(10, 50), 50, 1000, '#000000')
             all_sprite.add(pipe_down)
             pipes.add(pipe_down)
-        if event.type == pg.USEREVENT + 1:
-            score+=1
         if event.type == pg.USEREVENT:
-            spike_down = Spike(600, 578)
+            x_spike = random.randint(700,900)
+            spike_down = Spike(x_spike, 578)
             all_sprite.add(spike_down)
             pipes.add(spike_down)
 
-    if pg.sprite.spritecollide(block, pipes, False):
-        run = False
+    
 
     all_sprite.draw(screen)
     all_sprite.update()

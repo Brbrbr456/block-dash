@@ -7,6 +7,5 @@ class Bigblock(pg.sprite.Sprite):
         self.image = pg.surface.Surface((w, h))
         self.image.fill(color)
         self.rect = self.image.get_rect(topleft=(x, y))
-
     def update(self):
         self.rect.x -= 3

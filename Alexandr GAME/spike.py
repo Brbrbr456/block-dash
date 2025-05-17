@@ -7,4 +7,4 @@ class Spike(pg.sprite.Sprite):
         self.jump_time = None
 
     def update(self):
-        self.rect.x = -3
+        self.rect.x -= 3
